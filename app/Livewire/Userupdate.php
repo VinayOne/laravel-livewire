@@ -10,6 +10,11 @@ class Userupdate extends Component
     public $s_id;
     public $name;
     public $email;
+    public $gender;
+    public $resident;
+    public $country;
+    public $state;
+    public $description;
 
     public function render()
     {
@@ -20,7 +25,12 @@ class Userupdate extends Component
     {
         $this->validateOnly($field, [
             'name' => 'required | min:4 | max:20',
-            'email' => 'required | email'
+            'email' => 'required | email',
+            'gender' => 'required',
+            'resident' => 'required',
+            'country' => 'required',
+            'state' => 'required',
+            'description' => 'required'
         ]);
     }
 
@@ -28,15 +38,26 @@ class Userupdate extends Component
     {
         $this->validate([
             'name' => 'required | min:4 | max:20',
-            'email' => 'required | email'
+            'email' => 'required | email',
+            'gender' => 'required',
+            'resident' => 'required',
+            'country' => 'required',
+            'state' => 'required',
+            'description' => 'required'
         ]);
         
         $userdata = User::find($this->s_id);
-        $userdata->id = $this->s_id;
-        $userdata->name = $this->name;
-        $userdata->email = $this->email;
-        $userdata->save();
-       // return $this->redirectRoute('dashboard', navigate: true);
+        $userdata->update([
+            'name'=>$this->name,
+            'email'=>$this->email,
+            'gender'=>$this->gender,
+            'resident'=>$this->resident,
+            'country'=>$this->country,
+            'state'=>$this->state,
+            'description'=>$this->description
+        ]);
+
+       return $this->redirectRoute('dashboard', navigate: true);
     }
     
 }
